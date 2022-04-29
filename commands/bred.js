@@ -173,7 +173,7 @@ module.exports = {
     if (adj[0] === adj[0].toUpperCase()) {
       ending = adj
     }
-    const str = `Sait leivän jossa on ${ingrds.join(', ')} ja kaksi viipaletta leipää. ${ending} Pity: ${pity}`
+    const str = `Sait leivän jossa on ${ingrds.join(', ')} ja kaksi viipaletta leipää. ${ending}`
     await interaction.reply(str)
   }
 }

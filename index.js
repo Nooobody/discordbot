@@ -36,6 +36,10 @@ client.once('ready', () => {
       Routes.applicationGuildCommands(process.env.BOT_ID, process.env.TEST_SERVER),
       { body: restCmds },
     )
+    await rest.put(
+      Routes.applicationGuildCommands(process.env.BOT_ID, process.env.NFR_SERVER),
+      { body: restCmds },
+    )
 
     console.log('Successfully reloaded application commands.')
 
