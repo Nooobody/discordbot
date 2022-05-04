@@ -13,6 +13,14 @@ const star1 = [
   'mango siivuja ',
   'lenkkimakkaraa',
   'HKn sininen',
+  'salaatinlehti',
+  'pekonia',
+  'suolakurkkua',
+  'maapähkinävoita',
+  'suklaalevitettä',
+  'katkarapuja',
+  'porkkanaraastetta',
+  'tonnikalaa',
 ]
 
 const star2 = [
@@ -30,6 +38,15 @@ const star2 = [
   'hot dogi',
   'hampurilainen',
   'voileipä',
+  'munakokkelia',
+  'raejuustoa',
+  'tilliä',
+  'hummusta',
+  'silliä',
+  'sieniä',
+  'kantterelleja',
+  'majoneesia',
+  'BBQ-kastiketta',
 ]
 
 const star3 = [
@@ -62,6 +79,14 @@ const star3 = [
   'vaahtokarkkeja',
   'nallekarkkeja',
   'salmiakkia',
+  'sulatettua juustoa',
+  'worcesterkastiketta',
+  'pikkelöityjä vihanneksia',
+  'kalakeittoa',
+  'kesäkeittoa',
+  'Kallen mätitahnaa',
+  'omenapiirakka',
+  'broileri (kokonainen)',
 ]
 
 const star4 = [
@@ -88,6 +113,14 @@ const star4 = [
   'se nakki mitä kukaan ei halua',
   'anopinkieli',
   'jäähdytinnestettä',
+  'sinapinsiemeniä',
+  'kanelia',
+  'viinietikkaa',
+  'balsamiviinietikkaa',
+  'päärynä (kokonainen)',
+  'porkkana (kokonainen)',
+  'kasvisliemikuutio',
+  'joulukinkku (kokonainen)',
 ]
 
 const star5 = [
@@ -97,6 +130,15 @@ const star5 = [
   'kolme toivetta',
   'elämän tarkoitus',
   'eurojackpotin oikeat numerot',
+  'kärpässieni',
+  'työhakemus',
+  'työsopimus',
+  'Hallituksen epäluottamuslause',
+  'Windows 95 bluescreen',
+  '500 virhe, palvelimella virhe',
+  '408 virhe, palvelupyyntö aikakatkaistiin',
+  'palvelin ei juuri nyt ole saatavilla',
+  'yritä myöhemmin uudestaan' 
 ]
 
 const adjectives = [
@@ -107,17 +149,22 @@ const adjectives = [
   'kivalta',
   'siltä että haluat yhden rieseneistäni',
   'siltä että tämän teki joku botti',
+  'Taidatkin haluta yhden rieseneistäni.',
+  'Tämänkin leivän tarjosi leipäbotti.',
+  'LEIPÄ JUMISSA!!',
+  'Jaaha, aika lähteä lomalle.',
   'Taitaa nurkan takana olla patukkaa tarjolla tätä leipää vastaan.',
+  'Se vihu on sielä nurkasa!',
   'Torille!',
   'Olispa kaljaa.',
 ]
 
 const chances = [
-  0.01,
-  0.11,
-  0.26,
-  0.56,
-  1,
+  0.01, // 1% for 5-star
+  0.11, // 10% for 4-star
+  0.26, // 15% for 3-star
+  0.56, // 30% for 2-star
+  1,    // 44% for 1-star
 ]
 
 const ingredients = [
