@@ -5,10 +5,6 @@ class RandArray {
     this.arr = arr
   }
 
-  get a() {
-    return this.arr
-  }
-
   get rand() {
     return this.arr[Math.floor(Math.random() * this.arr.length)]
   }
@@ -64,7 +60,7 @@ const star2 = new RandArray([
 ])
 
 const star3 = new RandArray([
-  'karmelaadi',
+  'karmelaadia',
   'paprikaa',
   'habanero (kokonainen)',
   'persiljaa',
@@ -82,7 +78,7 @@ const star3 = new RandArray([
   'mustikoita',
   'banaani siivuja (pitkittäin)',
   'pannacotta',
-  'tiramisu',
+  'tiramisua',
   'jäätelöä',
   'eskimopuikko',
   'syntymäpäiväkakku (1/3 siivu)',
@@ -138,6 +134,9 @@ const star4 = new RandArray([
 ])
 
 const star5 = new RandArray([
+  'pala laivaa',
+  'hossu',
+  'sadan tonnin mosini',
   'leipäkone',
   'TPSn voittomahdollisuudet',
   'taikalamppu',
@@ -161,6 +160,7 @@ const adjectives = new RandArray([
   'tylsältä',
   'upeelta',
   'kivalta',
+  'tyhämiltä',
   'siltä että haluat yhden rieseneistäni',
   'siltä että tämän teki joku botti',
   'Taidatkin haluta yhden rieseneistäni.',
