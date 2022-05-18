@@ -1,6 +1,20 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 
-const star1 = [
+class RandArray {
+  constructor(arr) {
+    this.arr = arr
+  }
+
+  get arr() {
+    return this.arr
+  }
+
+  get rand() {
+    return this.arr[Math.floor(Math.random() * this.arr.length)]
+  }
+}
+
+const star1 = new RandArray([
   'voita',
   'kinkkua',
   'meetwursti',
@@ -21,9 +35,9 @@ const star1 = [
   'katkarapuja',
   'porkkanaraastetta',
   'tonnikalaa',
-]
+])
 
-const star2 = [
+const star2 = new RandArray([
   'pekonia',
   'kanasuikaleita',
   'lihasuikaleita',
@@ -47,9 +61,9 @@ const star2 = [
   'kantterelleja',
   'majoneesia',
   'BBQ-kastiketta',
-]
+])
 
-const star3 = [
+const star3 = new RandArray([
   'karmelaadi',
   'paprikaa',
   'habanero (kokonainen)',
@@ -87,9 +101,9 @@ const star3 = [
   'Kallen mätitahnaa',
   'omenapiirakka',
   'broileri (kokonainen)',
-]
+])
 
-const star4 = [
+const star4 = new RandArray([
   'sitruuna (kokonainen)',
   'vesimelooni (kokonainen)',
   'hunajamelooni (kokonainen)',
@@ -121,9 +135,9 @@ const star4 = [
   'porkkana (kokonainen)',
   'kasvisliemikuutio',
   'joulukinkku (kokonainen)',
-]
+])
 
-const star5 = [
+const star5 = new RandArray([
   'leipäkone',
   'TPSn voittomahdollisuudet',
   'taikalamppu',
@@ -139,9 +153,9 @@ const star5 = [
   '408 virhe, palvelupyyntö aikakatkaistiin',
   'palvelin ei juuri nyt ole saatavilla',
   'yritä myöhemmin uudestaan' 
-]
+])
 
-const adjectives = [
+const adjectives = new RandArray([
   'hienolta',
   'klassikolta',
   'tylsältä',
@@ -153,11 +167,13 @@ const adjectives = [
   'Tämänkin leivän tarjosi leipäbotti.',
   'LEIPÄ JUMISSA!!',
   'Jaaha, aika lähteä lomalle.',
-  'Taitaa nurkan takana olla patukkaa tarjolla tätä leipää vastaan.',
   'Se vihu on sielä nurkasa!',
   'Torille!',
   'Olispa kaljaa.',
-]
+  'Aika perus.',
+  'Aika paske.',
+  '',
+])
 
 const chances = [
   0.01, // 1% for 5-star
@@ -166,6 +182,22 @@ const chances = [
   0.56, // 30% for 2-star
   1,    // 44% for 1-star
 ]
+
+const breadTypes = new RandArray([
+  'leivän',
+  'sämpylän',
+  'hampurilaisen',
+  'patongin',
+])
+
+const grainTypes = new RandArray([
+  '',
+  'ruis',
+  'ohra',
+  'kaura',
+  'riisi',
+  'monivilja'
+])
 
 const ingredients = [
   star5,
@@ -209,18 +241,17 @@ module.exports = {
           }
         }
       }
-      const ind = Math.floor(Math.random() * arr.length)
-      ingrds.push(arr[ind])
+      ingrds.push(arr.rand)
     }
 
     interaction.client.pity += 1
 
-    const adj = adjectives[Math.floor(Math.random() * adjectives.length)]
+    const adj = adjectives.rand
     let ending = `Kuulostaa ${adj}!`
-    if (adj[0] === adj[0].toUpperCase()) {
+    if (!adj[0] || adj[0] === adj[0].toUpperCase()) {
       ending = adj
     }
-    const str = `Sait leivän jossa on ${ingrds.join(', ')} ja kaksi viipaletta leipää. ${ending}`
+    const str = `Sait ${breadTypes.rand} jossa on ${ingrds.join(', ')} ja kaksi viipaletta ${grainTypes.rand}leipää. ${ending}`
     await interaction.reply(str)
   }
 }
