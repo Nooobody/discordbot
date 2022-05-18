@@ -5,7 +5,7 @@ class RandArray {
     this.arr = arr
   }
 
-  get arr() {
+  get a() {
     return this.arr
   }
 
