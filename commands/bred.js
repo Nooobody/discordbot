@@ -20,7 +20,7 @@ const star1 = new RandArray([
   'avokadoa',
   'majoneesia',
   'tomaatti siivuja',
-  'mango siivuja ',
+  'mango siivuja',
   'lenkkimakkaraa',
   'HKn sininen',
   'salaatinlehti',
@@ -183,6 +183,14 @@ const chances = [
   1,    // 44% for 1-star
 ]
 
+const swears = new RandArray([
+  'Vitusti',
+  'Saatanasti',
+  'Perkeleesti',
+  'Hitosti',
+  'Niin maan perkeleesti',
+])
+
 const breadTypes = new RandArray([
   'leivän',
   'sämpylän',
@@ -195,7 +203,6 @@ const grainTypes = new RandArray([
   'ruis',
   'ohra',
   'kaura',
-  'riisi',
   'monivilja'
 ])
 
@@ -246,9 +253,14 @@ module.exports = {
 
     interaction.client.pity += 1
 
+    const samesies = ingrds.filter((v, i, a) => a.indexOf(v) !== i)
+
     const adj = adjectives.rand
     let ending = `Kuulostaa ${adj}!`
-    if (!adj[0] || adj[0] === adj[0].toUpperCase()) {
+    if (samesies.length) {
+      ending = `${swears.rand} ${samesies[0]}!`
+    }
+    else if (!adj[0] || adj[0] === adj[0].toUpperCase()) {
       ending = adj
     }
     const str = `Sait ${breadTypes.rand} jossa on ${ingrds.join(', ')} ja kaksi viipaletta ${grainTypes.rand}leipää. ${ending}`
