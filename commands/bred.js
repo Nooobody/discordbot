@@ -30,6 +30,7 @@ const star1 = new RandArray([
   'suklaalevitettä',
   'katkarapuja',
   'porkkanaraastetta',
+  'juustoraastetta',
   'tonnikalaa',
 ])
 
@@ -116,6 +117,7 @@ const star4 = new RandArray([
   'riisiä (keittämätöntä)',
   'ylikypsää riisiä',
   'ylikypsää pastaa',
+  'hometta',
   'huonot sukat',
   'se vihu siellä north southissa',
   'koirankarvoja',
@@ -161,17 +163,23 @@ const adjectives = new RandArray([
   'upeelta',
   'kivalta',
   'tyhämiltä',
+  'syötävältä',
   'siltä että haluat yhden rieseneistäni',
   'siltä että tämän teki joku botti',
   'Taidatkin haluta yhden rieseneistäni.',
   'Tämänkin leivän tarjosi leipäbotti.',
+  'Tämän leivän tarjosi Putin.',
+  'Ootteks kuullu et porkkanaraaste on porkkanan paras muoto?',
+  'Ketä tämänki haluais?',
   'LEIPÄ JUMISSA!!',
   'Jaaha, aika lähteä lomalle.',
-  'Se vihu on sielä nurkasa!',
+  'Jaaha, maailmanvalloituksen aika.',
+  'Se vihu on tuolla!',
   'Torille!',
   'Olispa kaljaa.',
   'Aika perus.',
   'Aika paske.',
+  'Ihan syötävä.',
   '',
 ])
 
@@ -218,7 +226,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('leipä')
     .setDescription('Tee leipä.'),
-  async execute(interaction) {
+  async execute(interaction, local) {
     const pity = interaction.client.pity
     const ingrds = []
     let pityChecked = false
@@ -248,7 +256,18 @@ module.exports = {
           }
         }
       }
-      ingrds.push(arr.rand)
+      let ingredient = arr.rand
+      if (Math.random() < 0.01) {
+        let newIngredient = ingredient.split('')
+        for (let ind in newIngredient) {
+          const newInd = Math.floor(Math.random() * newIngredient.length)
+          const temp = newIngredient[newInd]
+          newIngredient[newInd] = newIngredient[ind]
+          newIngredient[ind] = temp
+        }
+        ingredient = newIngredient.join('')
+      }
+      ingrds.push(ingredient)
     }
 
     interaction.client.pity += 1
@@ -263,7 +282,47 @@ module.exports = {
     else if (!adj[0] || adj[0] === adj[0].toUpperCase()) {
       ending = adj
     }
-    const str = `Sait ${breadTypes.rand} jossa on ${ingrds.join(', ')} ja kaksi viipaletta ${grainTypes.rand}leipää. ${ending}`
-    await interaction.reply(str)
+
+    let breadType = breadTypes.rand
+    let outerBread = ` ja kaksi viipaletta ${grainTypes.rand}leipää`
+    if (Math.random() < 0.01) {
+      outerBread = ''
+      breadType = '???'
+    }
+
+    let str = `Sait ${breadType} jossa on ${ingrds.join(', ')}${outerBread}. ${ending}`
+
+    if (Math.random() < 0.01) {
+      let words = str.split(' ')
+      for (let ind in words) {
+        const newInd = Math.floor(Math.random() * words.length)
+        const temp = words[newInd]
+        words[newInd] = words[ind]
+        words[ind] = temp
+      }
+      str = words.join(' ')
+    }
+
+    if (Math.random() < 0.001) {
+      let words = str.split(' ')
+      for (let wordInd in words) {
+        let newWord = words[wordInd].split('')
+        for (let ind in newWord) {
+          const newInd = Math.floor(Math.random() * newWord.length)
+          const temp = newWord[newInd]
+          newWord[newInd] = newWord[ind]
+          newWord[ind] = temp
+        }
+        words[wordInd] = newWord.join('')
+      }
+      str = words.join(' ')
+    }
+
+    if (!local) {
+      await interaction.reply(str)
+    }
+    else {
+      return str
+    }
   }
 }
