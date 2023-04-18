@@ -16,13 +16,13 @@ module.exports = {
     const { prompt } = interaction.data.options
     const res = await axios.post(API_URL, {
       body: {
-        key: SD_API_KEY
+        key: SD_API_KEY,
         prompt,
-        samples: 4
+        samples: 4,
         width: 512,
         height: 512,
         num_inference_steps: 20,
-        guidance_scale: 8
+        guidance_scale: 8,
       }
     })
 
