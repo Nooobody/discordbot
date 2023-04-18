@@ -30,12 +30,7 @@ module.exports = {
     }
     console.log(body)
 
-    const res = await axios.post(API_URL, {
-      body,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+    const res = await axios.post(API_URL, body)
     console.log(res.data)
 
     return res.data.output.join(' ')
