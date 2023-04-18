@@ -27,7 +27,7 @@ const { restCmds, commands } = require('./commands')
 
 const rest = new REST({ version: '9' }).setToken(discordToken)
 
-const koa = require('koa')
+const Koa = require('koa')
 const app = new Koa()
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
