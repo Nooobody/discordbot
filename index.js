@@ -18,8 +18,8 @@ if (!discordToken) {
 }
 
 const { 
-  interactionType, 
-  interactionResponseType, 
+  InteractionType, 
+  InteractionResponseType, 
   verifyKeyMiddleware
 } = require('discord-interactions')
 
@@ -66,11 +66,12 @@ client.once('ready', () => {
 
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) => {
   const interaction = req.body
-  if (interaction.type !== interactionType.APPLICATION_COMMAND) {
+  if (interaction.type !== InteractionType.APPLICATION_COMMAND) {
     return
   }
 
   const commandName = interaction.data.name
+  console.log(commandName)
 
   const cmd = client.commands.get(commandName)
   if (!cmd) {
