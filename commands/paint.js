@@ -13,7 +13,7 @@ module.exports = {
         .setDescription('Prompt')
         .setRequired(true)),
   async execute(interaction) {
-    const { prompt } = interaction.data.options
+    const prompt = interaction.data.options[0].value
     const res = await axios.post(API_URL, {
       body: {
         key: SD_API_KEY,
@@ -25,9 +25,9 @@ module.exports = {
         guidance_scale: 8,
       }
     })
+    console.log(res)
 
-    const json = await res.json()
-    return json.output.join(' ')
+    return res.output.join(' ')
   }
 }
 
