@@ -29,6 +29,7 @@ const rest = new REST({ version: '9' }).setToken(discordToken)
 
 const Koa = require('koa')
 const app = new Koa()
+const route = require('koa-route')
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 client.commands = commands
@@ -64,7 +65,7 @@ client.once('ready', () => {
   }
 })()
 
-app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
+app.use(route.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
   const interaction = req.body
   if (interaction.type !== interactionType.APPLICATION_COMMAND) {
     return
@@ -95,7 +96,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
     interaction.client.borked = true
     await interaction.reply({ content: 'Leipäkone hajos, häpeäisit!' })
   }
-})
+}))
 
 app.listen(8999)
 client.login(discordToken)
