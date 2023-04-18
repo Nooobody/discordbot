@@ -18,11 +18,15 @@ module.exports = {
     const body = {
       key: SD_API_KEY,
       prompt,
+      negative_prompt: '',
       samples: 4,
       width: 512,
       height: 512,
       num_inference_steps: 20,
-      guidance_scale: 8,
+      seed: null,
+      guidance_scale: 7.5,
+      webhook: null,
+      track_id: null
     }
     console.log(body)
 
