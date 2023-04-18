@@ -14,18 +14,25 @@ module.exports = {
         .setRequired(true)),
   async execute(interaction) {
     const prompt = interaction.data.options[0].value
+
+    const body = {
+      key: SD_API_KEY,
+      prompt,
+      samples: 4,
+      width: 512,
+      height: 512,
+      num_inference_steps: 20,
+      guidance_scale: 8,
+    }
+    console.log(body)
+
     const res = await axios.post(API_URL, {
-      body: {
-        key: SD_API_KEY,
-        prompt,
-        samples: 4,
-        width: 512,
-        height: 512,
-        num_inference_steps: 20,
-        guidance_scale: 8,
+      body,
+      headers: {
+        "Content-Type": "application/json"
       }
     })
-    console.log(res)
+    console.log(res.output)
 
     return res.output.join(' ')
   }
