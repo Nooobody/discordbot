@@ -19,7 +19,7 @@ module.exports = {
       key: SD_API_KEY,
       prompt,
       negative_prompt: '',
-      samples: 4,
+      samples: 1,
       width: 512,
       height: 512,
       num_inference_steps: 20,
