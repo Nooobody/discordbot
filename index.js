@@ -38,31 +38,31 @@ client.once('ready', () => {
   console.log('Kohta tulleepi leipää!')
 });
 
-(async () => {
+// (async () => {
   // const cache = fs.readFileSync('./cached_commands', 'utf8')
   // if (JSON.stringify(restCmds) === cache) {
   //   return
   // }
-  try {
-    console.log('Started refreshing application commands!')
-
-    await rest.put(
-      Routes.applicationGuildCommands(process.env.BOT_ID, process.env.TEST_SERVER),
-      { body: restCmds },
-    )
-    await rest.put(
-      Routes.applicationGuildCommands(process.env.BOT_ID, process.env.NFR_SERVER),
-      { body: restCmds },
-    )
-
-    console.log('Successfully reloaded application commands.')
-
+  // try {
+  //   console.log('Started refreshing application commands!')
+  //
+  //   await rest.put(
+  //     Routes.applicationGuildCommands(process.env.BOT_ID, process.env.TEST_SERVER),
+  //     { body: restCmds },
+  //   )
+  //   await rest.put(
+  //     Routes.applicationGuildCommands(process.env.BOT_ID, process.env.NFR_SERVER),
+  //     { body: restCmds },
+  //   )
+  //
+  //   console.log('Successfully reloaded application commands.')
+  //
     // fs.writeFileSync('./cached_commands', JSON.stringify(restCmds), 'utf8')
-  }
-  catch (err) {
-    console.error(err)
-  }
-})()
+//   }
+//   catch (err) {
+//     console.error(err)
+//   }
+// })()
 
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) => {
   const interaction = req.body
