@@ -3,8 +3,8 @@ const dotenv = require("dotenv");
 dotenv.config()
 
 // const fs = require('node:fs')
-const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
+const axios = require('axios')
 
 const PUBLIC_KEY = process.env.PUBLIC_KEY
 if (!PUBLIC_KEY) {
@@ -24,36 +24,37 @@ const {
 
 const { restCmds, commands } = require('./commands')
 
-const rest = new REST({ version: '9' }).setToken(discordToken)
+const discord_api = axios.create({
+  baseURL: 'https://discord.com/api/',
+  timeout: 3000,
+  headers: {
+	"Access-Control-Allow-Origin": "*",
+	"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+	"Access-Control-Allow-Headers": "Authorization",
+	"Authorization": `Bot ${TOKEN}`
+  }
+});
 
 const express = require('express')
 const app = express()
 
-// (async () => {
-  // const cache = fs.readFileSync('./cached_commands', 'utf8')
-  // if (JSON.stringify(restCmds) === cache) {
-  //   return
-  // }
-  // try {
-  //   console.log('Started refreshing application commands!')
-  //
-  //   await rest.put(
-  //     Routes.applicationGuildCommands(process.env.BOT_ID, process.env.TEST_SERVER),
-  //     { body: restCmds },
-  //   )
-  //   await rest.put(
-  //     Routes.applicationGuildCommands(process.env.BOT_ID, process.env.NFR_SERVER),
-  //     { body: restCmds },
-  //   )
-  //
-  //   console.log('Successfully reloaded application commands.')
-  //
-    // fs.writeFileSync('./cached_commands', JSON.stringify(restCmds), 'utf8')
-//   }
-//   catch (err) {
-//     console.error(err)
-//   }
-// })()
+app.get('/register_commands', async (req, res) => {
+  try {
+    console.log('Started refreshing application commands!')
+
+    const sendCommands = (server) => {
+      return discord_api.put(`/applications/${process.env.BOT_ID}/guilds/${server}/commands`, restCmds)
+    }
+
+    await sendCommands(process.env.TEST_SERVER)
+    await sendCommands(process.env.NFR_SERVER)
+
+    console.log('Successfully reloaded application commands.')
+  }
+  catch (err) {
+    console.error(err)
+  }
+})
 
 const sendReply = (res, content) => {
   res.send({
