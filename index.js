@@ -80,7 +80,7 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) =>
 
   if (client.borked) {
     if (commandName === 'fiksaa') {
-      await cmd.execute(interaction)
+      await cmd.execute(interaction, client)
     }
     else {
       await interaction.reply({ content: 'Leipäkone ei toimi kun se on hajonnut. Mälsää.'})
@@ -89,11 +89,11 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) =>
   }
 
   try {
-    await cmd.execute(interaction)
+    await cmd.execute(interaction, client)
   }
   catch (err) {
     console.error(err)
-    interaction.client.borked = true
+    client.borked = true
     await interaction.reply({ content: 'Leipäkone hajos, häpeäisit!' })
   }
 })
