@@ -7,10 +7,10 @@ module.exports = {
   async execute(interaction) {
     if (interaction.client.borked) {
       interaction.client.borked = false
-      await interaction.reply('Korjasit leipäkoneen! Mahtavaa!')
+      return 'Korjasit leipäkoneen! Mahtavaa!'
     }
     else {
-      await interaction.reply('Ei leipäkone ole hajalla, senkin töhelö!')
+      return 'Ei leipäkone ole hajalla, senkin töhelö!'
     }
   }
 }
