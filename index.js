@@ -65,7 +65,13 @@ client.once('ready', () => {
   }
 })()
 
-app.use(route.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
+const verifyKey = async (ctx) => {
+  console.log("In verify key!")
+  return verifyKeyMiddleware(PUBLIC_KEY)(ctx.req, ctx.res)
+}
+
+app.use(route.post('/interactions', verifyKey, async ({ req, res }) => {
+  console.log("In interactions!")
   const interaction = req.body
   if (interaction.type !== interactionType.APPLICATION_COMMAND) {
     return
