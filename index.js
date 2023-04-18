@@ -7,14 +7,28 @@ const { Client, Intents } = require('discord.js')
 const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
 
+const PUBLIC_KEY = process.env.PUBLIC_KEY
+if (!PUBLIC_KEY) {
+  throw "No PUBLIC_KEY has been defined!"
+}
+
 const discordToken = process.env.DISCORD_TOKEN
 if (!discordToken) {
-  throw "No DISCORD_TOKEN has been defined!";
+  throw "No DISCORD_TOKEN has been defined!"
 }
+
+const { 
+  interactionType, 
+  interactionResponseType, 
+  verifyKeyMiddleware 
+} = require('discord-interactions')
 
 const { restCmds, commands } = require('./commands')
 
 const rest = new REST({ version: '9' }).setToken(discordToken)
+
+const koa = require('koa')
+const app = new Koa()
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 client.commands = commands
@@ -50,18 +64,21 @@ client.once('ready', () => {
   }
 })()
 
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand()) {
+app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
+  const interaction = req.body
+  if (interaction.type !== interactionType.APPLICATION_COMMAND) {
     return
   }
 
-  const cmd = client.commands.get(interaction.commandName)
+  const commandName = interaction.data.name
+
+  const cmd = client.commands.get(commandName)
   if (!cmd) {
     return
   }
 
   if (client.borked) {
-    if (interaction.commandName === 'fiksaa') {
+    if (commandName === 'fiksaa') {
       await cmd.execute(interaction)
     }
     else {
@@ -80,4 +97,5 @@ client.on('interactionCreate', async interaction => {
   }
 })
 
+app.listen(8999)
 client.login(discordToken)
