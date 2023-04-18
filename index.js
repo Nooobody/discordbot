@@ -20,16 +20,15 @@ if (!discordToken) {
 const { 
   interactionType, 
   interactionResponseType, 
-  verifyKeyMiddleware 
+  verifyKeyMiddleware
 } = require('discord-interactions')
 
 const { restCmds, commands } = require('./commands')
 
 const rest = new REST({ version: '9' }).setToken(discordToken)
 
-const Koa = require('koa')
-const app = new Koa()
-const route = require('koa-route')
+const express = require('express')
+const app = express()
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 client.commands = commands
@@ -65,13 +64,7 @@ client.once('ready', () => {
   }
 })()
 
-const verifyKey = async (ctx) => {
-  console.log("In verify key!")
-  return verifyKeyMiddleware(PUBLIC_KEY)(ctx.req, ctx.res)
-}
-
-app.use(route.post('/interactions', verifyKey, async ({ req, res }) => {
-  console.log("In interactions!")
+app.post('/interactions', verifyKeyMiddleware, async ( req, res ) => {
   const interaction = req.body
   if (interaction.type !== interactionType.APPLICATION_COMMAND) {
     return
@@ -102,7 +95,7 @@ app.use(route.post('/interactions', verifyKey, async ({ req, res }) => {
     interaction.client.borked = true
     await interaction.reply({ content: 'Leipäkone hajos, häpeäisit!' })
   }
-}))
+})
 
 app.listen(8999)
 client.login(discordToken)
