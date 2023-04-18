@@ -2,7 +2,7 @@
 const dotenv = require("dotenv");
 dotenv.config()
 
-const fs = require('node:fs')
+// const fs = require('node:fs')
 const { Client, Intents } = require('discord.js')
 const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
@@ -25,10 +25,10 @@ client.once('ready', () => {
 });
 
 (async () => {
-  const cache = fs.readFileSync('./cached_commands', 'utf8')
-  if (JSON.stringify(restCmds) === cache) {
-    return
-  }
+  // const cache = fs.readFileSync('./cached_commands', 'utf8')
+  // if (JSON.stringify(restCmds) === cache) {
+  //   return
+  // }
   try {
     console.log('Started refreshing application commands!')
 
@@ -43,7 +43,7 @@ client.once('ready', () => {
 
     console.log('Successfully reloaded application commands.')
 
-    fs.writeFileSync('./cached_commands', JSON.stringify(restCmds), 'utf8')
+    // fs.writeFileSync('./cached_commands', JSON.stringify(restCmds), 'utf8')
   }
   catch (err) {
     console.error(err)
