@@ -318,11 +318,6 @@ module.exports = {
       str = words.join(' ')
     }
 
-    if (!local) {
-      await interaction.reply(str)
-    }
-    else {
-      return str
-    }
+    return str
   }
 }

@@ -64,6 +64,15 @@ client.once('ready', () => {
 //   }
 // })()
 
+const sendReply = (res, content) => {
+  res.send({
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      content
+    }
+  })
+}
+
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) => {
   const interaction = req.body
   if (interaction.type !== InteractionType.APPLICATION_COMMAND) {
@@ -80,21 +89,23 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) =>
 
   if (client.borked) {
     if (commandName === 'fiksaa') {
-      await cmd.execute(interaction, client)
+      const reply = await cmd.execute(interaction, client)
+      sendReply(res, reply)
     }
     else {
-      await interaction.reply({ content: 'Leipäkone ei toimi kun se on hajonnut. Mälsää.'})
+      sendReply(res, 'Leipäkone ei toimi kun se on hajonnut. Mälsää.')
     }
     return
   }
 
   try {
-    await cmd.execute(interaction, client)
+    const reply = await cmd.execute(interaction, client)
+    sendReply(res, reply)
   }
   catch (err) {
     console.error(err)
     client.borked = true
-    await interaction.reply({ content: 'Leipäkone hajos, häpeäisit!' })
+    sendReply(res, 'Leipäkone hajos, häpeäisit!')
   }
 })
 
