@@ -32,9 +32,9 @@ module.exports = {
         "Content-Type": "application/json"
       }
     })
-    console.log(res.output)
+    console.log(res.data)
 
-    return res.output.join(' ')
+    return res.data.output.join(' ')
   }
 }
 
