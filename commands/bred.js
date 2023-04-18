@@ -226,8 +226,8 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('leipä')
     .setDescription('Tee leipä.'),
-  async execute(interaction, client, local) {
-    const pity = client.pity
+  async execute(interaction, local) {
+    const pity = 0 // TODO: Add persistence
     const ingrds = []
     let pityChecked = false
     for (let i = 0; i < 3; i++) {
@@ -236,7 +236,6 @@ module.exports = {
       
       if (!pityChecked && pity >= 20) {
         arr = star5
-        client.pity = 0
         pityChecked = true
       }
       else if (!pityChecked && pity % 5 === 0) {
@@ -269,8 +268,6 @@ module.exports = {
       }
       ingrds.push(ingredient)
     }
-
-    client.pity += 1
 
     const samesies = ingrds.filter((v, i, a) => a.indexOf(v) !== i)
 

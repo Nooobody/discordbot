@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 dotenv.config()
 
 // const fs = require('node:fs')
-const { Client, Intents } = require('discord.js')
 const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
 
@@ -29,14 +28,6 @@ const rest = new REST({ version: '9' }).setToken(discordToken)
 
 const express = require('express')
 const app = express()
-
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
-client.commands = commands
-client.pity = 0
-
-client.once('ready', () => {
-  console.log('Kohta tulleepi leipää!')
-});
 
 // (async () => {
   // const cache = fs.readFileSync('./cached_commands', 'utf8')
@@ -80,34 +71,20 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) =>
   }
 
   const commandName = interaction.data.name
-  console.log(commandName)
 
-  const cmd = client.commands.get(commandName)
+  const cmd = commands.get(commandName)
   if (!cmd) {
     return
   }
 
-  if (client.borked) {
-    if (commandName === 'fiksaa') {
-      const reply = await cmd.execute(interaction, client)
-      sendReply(res, reply)
-    }
-    else {
-      sendReply(res, 'Leipäkone ei toimi kun se on hajonnut. Mälsää.')
-    }
-    return
-  }
-
   try {
-    const reply = await cmd.execute(interaction, client)
+    const reply = await cmd.execute(interaction)
     sendReply(res, reply)
   }
   catch (err) {
     console.error(err)
-    client.borked = true
     sendReply(res, 'Leipäkone hajos, häpeäisit!')
   }
 })
 
 app.listen(8999)
-client.login(discordToken)
