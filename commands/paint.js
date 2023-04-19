@@ -47,7 +47,7 @@ module.exports = {
 
 
     await discordApi.patch(`webhooks/${process.env.BOT_ID}/${interaction.token}/messages/@original`, {
-      content: "Prompt finished",
+      content: `Prompt finished: ${prompt}`,
       embeds: res.data.output.map((v, i) => ({ image: { url: v } }))
     })
   }
