@@ -15,7 +15,14 @@ module.exports = {
         .setRequired(true)),
   async execute(interaction, sendReply, discordApi) {
 
-    sendReply("Generating!", InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
+    // sendReply("Generating!", InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
+
+    await discordApi.post(`/interactions/${interaction.id}/${interaction.token}/callback`, {
+      type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        "content": "Generating!"
+      }
+    })
 
     await discordApi.post(`/channels/${537053633884192772}/webhooks`, { name: 'test webhook' })
 
