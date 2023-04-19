@@ -48,7 +48,7 @@ module.exports = {
 
     await discordApi.patch(`webhooks/${process.env.BOT_ID}/${interaction.token}/messages/@original`, {
       content: "Prompt finished",
-      attachments: res.data.output.map((v, i) => ({ filename: `gen${i}`, url: v }))
+      attachments: res.data.output.map((v, i) => ({ id: i, filename: `sample_${i + 1}`, description: `Generated image`, url: v }))
     })
   }
 }
