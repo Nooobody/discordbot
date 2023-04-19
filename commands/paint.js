@@ -34,7 +34,7 @@ module.exports = {
     }
     console.log(body)
 
-    console.log (interaction.data)
+    console.log (interaction)
     console.log("Generating image")
     const res = await axios.post(API_URL, body)
     console.log(res.data)
