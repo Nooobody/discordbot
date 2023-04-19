@@ -43,7 +43,7 @@ app.get('/register_commands', async (req, res) => {
     console.log('Started refreshing application commands!')
 
     const sendCommands = (server) => {
-      return discord_api.put(`/applications/${process.env.BOT_ID}/guilds/${server}/commands`, restCmds)
+      return discord_api.put(`applications/${process.env.BOT_ID}/guilds/${server}/commands`, restCmds)
     }
 
     await sendCommands(process.env.TEST_SERVER)
