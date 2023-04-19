@@ -24,8 +24,6 @@ module.exports = {
       }
     })
 
-    await discordApi.post(`/channels/${537053633884192772}/webhooks`, { name: 'test webhook' })
-
     const prompt = interaction.data.options[0].value
 
     const body = {
