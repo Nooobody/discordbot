@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const axios = require('axios')
+const { InteractionResponseType } = require('discord-interactions')
 
 const API_URL = 'https://stablediffusionapi.com/api/v3/text2img'
 const SD_API_KEY = process.env.SD_API_KEY
@@ -12,7 +13,10 @@ module.exports = {
       option.setName('prompt')
         .setDescription('Prompt')
         .setRequired(true)),
-  async execute(interaction) {
+  async execute(interaction, sendReply, discordApi) {
+
+    sendReply("Generating!", InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
+
     const prompt = interaction.data.options[0].value
 
     const body = {
@@ -33,7 +37,10 @@ module.exports = {
     const res = await axios.post(API_URL, body)
     console.log(res.data)
 
-    return res.data.output.join(' ')
+    discordApi.patch(`/webhooks/${process.env.BOT_ID}/${interaction.data.token}/messages/@original`, {
+      content: "Prompt finished",
+      attachments: res.data.output.map((v, i) => ({ filename: `gen${i}`, url: v }))
+    })
   }
 }
 

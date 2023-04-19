@@ -56,13 +56,17 @@ app.get('/register_commands', async (req, res) => {
   }
 })
 
-const sendReply = (res, content) => {
+const sendReply = (res, content, type) => {
   res.send({
-    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    type: type ?? InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
       content
     }
   })
+}
+
+const sendReplyRes = (res) => {
+  return (content, type) => sendReply(res, content, type)
 }
 
 app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) => {
@@ -79,8 +83,10 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) =>
   }
 
   try {
-    const reply = await cmd.execute(interaction)
-    sendReply(res, reply)
+    const reply = await cmd.execute(interaction, sendReplyRes(res), discord_api)
+    if (reply) {
+      sendReply(res, reply)
+    }
   }
   catch (err) {
     console.error(err)
