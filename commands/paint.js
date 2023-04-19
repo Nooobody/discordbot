@@ -50,6 +50,8 @@ module.exports = {
       content: `Prompt finished: ${prompt}`,
       embeds: res.data.output.map((v, i) => ({ image: { url: v } }))
     })
+
+    return "OK"
   }
 }
 

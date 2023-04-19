@@ -84,7 +84,10 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async ( req, res ) =>
 
   try {
     const reply = await cmd.execute(interaction, sendReplyRes(res), discord_api)
-    if (reply) {
+    if (reply === 'OK') {
+      res.sendStatus(200)
+    }
+    else if (reply) {
       sendReply(res, reply)
     }
   }
