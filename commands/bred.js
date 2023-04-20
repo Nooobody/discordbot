@@ -81,7 +81,7 @@ const star3 = new RandArray([
   'pannacotta',
   'tiramisua',
   'jäätelöä',
-  'eskimopuikko',
+  'pingviinipuikko',
   'syntymäpäiväkakku (1/3 siivu)',
   'syntymäpäiväkakku (1/16 siivu)',
   'syntymäpäiväkakku (1/4 siivu)',
