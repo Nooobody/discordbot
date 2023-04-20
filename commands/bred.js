@@ -227,7 +227,7 @@ module.exports = {
     .setName('leipä')
     .setDescription('Tee leipä.'),
   async execute(interaction, local) {
-    const pity = 0 // TODO: Add persistence
+    const pity = 1 // TODO: Add persistence
     const ingrds = []
     let pityChecked = false
     for (let i = 0; i < 3; i++) {

@@ -1,8 +1,7 @@
 const fs = require('node:fs')
-const { Collection } = require('discord.js')
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js') && file !== 'index.js');
 
-const commands = new Collection()
+const commands = new Map()
 const cmds = []
 
 for (const file of commandFiles) {

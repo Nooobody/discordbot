@@ -2,8 +2,6 @@
 const dotenv = require("dotenv");
 dotenv.config()
 
-// const fs = require('node:fs')
-const { Routes } = require('discord-api-types/v9')
 const axios = require('axios')
 
 const PUBLIC_KEY = process.env.PUBLIC_KEY
